@@ -1,0 +1,63 @@
+MINIMUM WINDOW SUBSTRING:
+
+Example 1:
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+Example 2:
+
+Input: s = "a", t = "a"
+Output: "a"
+Explanation: The entire string s is the minimum window.
+Example 3:
+
+Input: s = "a", t = "aa"
+Output: ""
+Explanation: Both 'a's from t must be included in the window.
+Since the largest window of s only has one 'a', return empty string.
+
+---------------------------------------------------------------------------------------------------
+
+SOLUTION:
+class Solution {
+    public String minWindow(String s, String t) {
+        int i = 0;
+        int j = 0;
+        String tempT = "";
+        String resString = "";
+        String finalRes = "";
+        for(i = 0; i < s.length(); i++){
+            tempT = t;
+            resString = "";
+            for(j = i; j < s.length(); j++){
+                if(!tempT.isEmpty()){
+                    int index = tempT.indexOf(s.charAt(j));
+                    if (index != -1) {
+                        tempT = tempT.substring(0, index) + tempT.substring(index + 1);
+                        System.out.println("T : " + tempT);
+                    }
+                    resString = resString + s.charAt(j);
+                    System.out.println("RES : " + resString);
+                    if(j == s.length()-1 && tempT.isEmpty()){
+                        if(finalRes.isEmpty())
+                            finalRes = resString;
+                        else if(resString.length() < finalRes.length()){
+                            System.out.println("Length" + resString.length());
+                            finalRes = resString;
+                        }
+                    }
+                }
+                else{
+                    if(finalRes.isEmpty())
+                        finalRes = resString;
+                    else if(resString.length() < finalRes.length()){
+                        System.out.println("Length" + resString.length());
+                        finalRes = resString;
+                    }
+                    break;
+                }
+            }
+        }
+        return finalRes;
+    }
+}
